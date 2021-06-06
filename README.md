@@ -5,12 +5,6 @@ It can be very useful for example when you want to play around with fractals or 
 
 # Installation
 
-### Windows
-```
-pip install pyZoom 
-```
-
-### Linux
 ```
 pip3 install pyZoom
 ```

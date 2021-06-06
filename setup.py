@@ -4,7 +4,7 @@ with open("README.md", "r") as f:
     description = f.read()
 
 setup(
-    name='pyZoom',
+    name='pygameZoom',
     version='0.0.1',
     description='Zoom into pygame figures without quality loss',
     long_description=description,
@@ -22,7 +22,7 @@ setup(
     install_requires=[
         "pygame"
     ],
-    url="",
+    url="https://github.com/Grzetan/pyZoom",
     author="Grzegorz Paleta",
     author_email="grzetan@gmail.com"
 )
