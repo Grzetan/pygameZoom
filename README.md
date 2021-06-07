@@ -233,6 +233,22 @@ Example:
 self.pygameZoom.draw_polygon((255, 255, 255), [(0.653, 789.234), (100,100), (345, 890.2)],0)
 ```
 
+# Blitting images in pygameZoom
+
+To blit an image add this line to draw shapes section:
+
+```python
+image = pygame.image.load("image.jpg")
+self.pygameZoom.blit(image, (x, y))
+```
+x and y are the coordinates of the top right corner.
+
+Remember!!!
+When you zoom into blitted image, this image will slowly lose quality.
+Zooming without quality loss work only with shapes.
+
+--------------------------
+
 Great se we finished writing our class. Don't forget to make an instance of Window class.
 
 ```python

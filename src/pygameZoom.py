@@ -88,6 +88,17 @@ class PygameZoom(object):
                 points.append(self.outer.map_point(p[0], p[1]))
             pygame.draw.polygon(surface, self.color, points, self.width)
 
+    class Blit(object):
+        def __init__(self, surface, start,outer):
+            super().__init__()
+            self.surface = surface
+            self.start = start
+            self.outer = outer
+
+        def draw(self, surface):
+            scaled = pygame.transform.scale(self.surface, (int(self.surface.get_width() * self.outer.zoom), int(self.surface.get_height() * self.outer.zoom)))
+            surface.blit(scaled, self.outer.map_point(self.start[0], self.start[1]))
+
     def map_point(self, x, y):
         new_x = (x - self.boundaries[0]) * self.zoom
         new_y = (y - self.boundaries[2]) * self.zoom
@@ -107,6 +118,9 @@ class PygameZoom(object):
 
     def draw_polygon(self, color, points, width=0):
         self.shapes.append(self.Polygon(color, points, width, self))
+
+    def blit(self, surface, start):
+        self.shapes.append(self.Blit(surface, start,self))
 
     def set_background(self, value):
         self.background = value
