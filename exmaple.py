@@ -1,7 +1,6 @@
 import pygame
 import math
 import sys
-from src.pyZoom import VectorZoom as VZ
 
 
 class Window:

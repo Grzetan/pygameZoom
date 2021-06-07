@@ -1,7 +1,7 @@
 import pygame
 
 
-class PyZoom(object):
+class PygameZoom(object):
     shapes = []
     zoom_strength = 0.05  # higher = stronger
     zoom = 1

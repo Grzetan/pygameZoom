@@ -9,7 +9,7 @@ setup(
     description='Zoom into pygame figures without quality loss',
     long_description=description,
     long_description_content_type="text/markdown",
-    py_modules=['pyZoom'],
+    py_modules=['pygameZoom'],
     package_dir={"": "src"},
     classifiers=[
         "Natural Language :: English",
@@ -22,7 +22,7 @@ setup(
     install_requires=[
         "pygame"
     ],
-    url="https://github.com/Grzetan/pyZoom",
+    url="https://github.com/Grzetan/pygameZoom",
     author="Grzegorz Paleta",
     author_email="grzetan@gmail.com"
 )

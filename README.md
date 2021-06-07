@@ -1,12 +1,12 @@
 # Introduction
 
-pyZoom is an extension to pygame that allows you to zoom into drawn figures without quality loss.
+pygameZoom is an extension to pygame that allows you to zoom into drawn figures without quality loss.
 It can be very useful for example when you want to play around with fractals or allow player of your 2D game zoom into the screen
 
 # Installation
 
 ```
-pip3 install pyZoom
+pip install pygameZoom
 ```
 
 # Requirements
@@ -15,9 +15,9 @@ pip3 install pyZoom
 
 # How it works
 
-PyZoom sees canvas not as pixel grid but as coordinates system.
+pygameZoom sees canvas not as pixel grid but as coordinates system.
 
-When using pyZoom you can declare key point's of figures by using floats.
+When using pygameZoom you can declare key point's of figures by using floats.
 
 That means you can for example declare the center of a circle at (x=20.34, y=189.798).
 
@@ -29,14 +29,14 @@ First we need to import our dependencies.
 
 ```python
 import pygame
-from pyZoom import PyZoom
+from pygameZoom import PygameZoom
 ```
 
 In this tutorial I will be using object-oriented programming (OOP).
 
-The first step to using pyZoom is declaring an instance of PyZoom object.
+The first step to using pygameZoom is declaring an instance of pygameZoom object.
 It should be done in the constructor.
-Make sure to pass width and height to pyZoom constructor.
+Make sure to pass width and height to pygameZoom constructor.
 
 ```python
 class Window:
@@ -47,12 +47,19 @@ class Window:
         self.CLOCK = pygame.time.Clock()
         self.FPS = 30
         self.run = True
-        self.pyzoom = PyZoom(self.WIDTH, self.HEIGHT)
-        self.pyzoom.set_background((255, 0, 0))
+        self.pygameZoom = PygameZoom(self.WIDTH, self.HEIGHT)
+        self.pygameZoom.set_background((255, 0, 0))
         self.loop()
 ```
 
 You can also set background color. It's black by default.
+
+There is an option to change zoom strength by using this line in the constructor:
+
+```python
+self.pygameZoom.set_zoom_strength(value)
+```
+Default value is 0.05 se feel free to play around with it.
 
 Then we write basic loop method
 
@@ -83,7 +90,7 @@ def refresh_window(self):
     #Draw shapes
     
     #End of draw shapes section
-    self.pyzoom.render(self.WIN, (100, 100))
+    self.pygameZoom.render(self.WIN, (100, 100))
     pygame.display.update()
 ```
 We will get back to drawing shapes later in this tutorial.
@@ -91,7 +98,7 @@ We will get back to drawing shapes later in this tutorial.
 Let me explain this line of code
 
 ```python
-self.pyzoom.render(self.WIN, (0, 0))
+self.pygameZoom.render(self.WIN, (0, 0))
 ```
 
 This line adds generated surface to main window.
@@ -100,21 +107,21 @@ The second parameter are coordinates, so the main window knows where to blit gen
 There is an alternative way to blit generated image:
 
 ```python
-self.WIN.blit(self.pyzoom.generate_surface(),(0,0))
+self.WIN.blit(self.pygameZoom.generate_surface(),(0,0))
 ```
 
-But this way is not recommended because it only works when we are blitting generated surface at (0,0) coordinates.
+But this way is not recommended because it only works when we are blitting generated surface at (0,0) coordinates and width and height of pygameZoom canvas are the same as window's width and height.
 
-So I recommend you to always use first method, that way pyZoom knows where it's canvas is located, and it allows you to blit generated image at any coordinates on the screen.
+So I recommend you to always use first method, that way pygameZoom knows where it's canvas is located, and it allows you to blit generated image at any coordinates on the screen.
 
-## Let's take a look on how to draw shapes with pyZoom.
+## Let's take a look on how to draw shapes with pygameZoom.
 
 To draw any of shapes listed bellow ad corresponding code to draw shapes section in refresh_window.
 
 - ### Line
 
 ```python
-self.pyzoom.draw_line(color, x1, y1, x2, y2, width)
+self.pygameZoom.draw_line(color, x1, y1, x2, y2, width)
 ```
 
 Input data:
@@ -133,13 +140,13 @@ Input data:
     
 Example:
 ```python
-self.pyzoom.draw_line((255, 255, 255), 0, 0, 200, 200)
+self.pygameZoom.draw_line((255, 255, 255), 0, 0, 200, 200)
 ```
 
 - ### Rectangle
 
 ```python
-self.pyzoom.draw_rect(color, x, y, w, h, width)
+self.pygameZoom.draw_rect(color, x, y, w, h, width)
 ```
 
 Input data:
@@ -158,13 +165,13 @@ Input data:
     
 Example:
 ```python
-self.pyzoom.draw_rect((255, 255, 255), 100, 100, 200.123, 200,5.567)
+self.pygameZoom.draw_rect((255, 255, 255), 100, 100, 200.123, 200,5.567)
 ```
 
 - ### Circle
 
 ```python
-self.pyzoom.draw_circle(color, x, y, r, width)
+self.pygameZoom.draw_circle(color, x, y, r, width)
 ```
 
 Input data:
@@ -181,13 +188,13 @@ Input data:
     
 Example:
 ```python
-self.pyzoom.draw_circle((255, 255, 255), 100.5, 100.5, 50.9087,90)
+self.pygameZoom.draw_circle((255, 255, 255), 100.5, 100.5, 50.9087,90)
 ```
 
 - ### Ellipse
 
 ```python
-self.pyzoom.draw_ellipse(color, rect, width)
+self.pygameZoom.draw_ellipse(color, rect, width)
 ```
 
 Input data:
@@ -204,13 +211,13 @@ Input data:
     
 Example:
 ```python
-self.pyzoom.draw_ellipse((255, 255, 255), (100, 400.5, 80.123, 20),0)
+self.pygameZoom.draw_ellipse((255, 255, 255), (100, 400.5, 80.123, 20),0)
 ```
 
 - ### Polygon
 
 ```python
-self.pyzoom.draw_polygon(color, points, width)
+self.pygameZoom.draw_polygon(color, points, width)
 ```
 
 Input data:
@@ -223,7 +230,7 @@ Input data:
     
 Example:
 ```python
-self.pyzoom.draw_polygon((255, 255, 255), [(0.653, 789.234), (100,100), (345, 890.2)],0)
+self.pygameZoom.draw_polygon((255, 255, 255), [(0.653, 789.234), (100,100), (345, 890.2)],0)
 ```
 
 Great se we finished writing our class. Don't forget to make an instance of Window class.
@@ -232,4 +239,4 @@ Great se we finished writing our class. Don't forget to make an instance of Wind
 win = Window()
 ```
 
-Thanks for using pyZoom <3
+Thanks for using pygameZoom <3
