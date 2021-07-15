@@ -114,6 +114,21 @@ But this way is not recommended because it only works when we are blitting gener
 
 So I recommend you to always use first method, that way pygameZoom knows where it's canvas is located, and it allows you to blit generated image at any coordinates on the screen.
 
+# Disabling zooming and dragging
+
+You can disable zooming and dragging at any given time.
+
+```python
+#Zooming
+self.pygameZoom.allow_zooming(bool)
+#Dragging
+self.pygameZoom.allow_dragging(bool)
+```
+
+Where bool is either True or False.
+
+When False user can't use corresponding feature
+
 ## Let's take a look on how to draw shapes with pygameZoom.
 
 To draw any of shapes listed bellow ad corresponding code to draw shapes section in refresh_window.
@@ -246,6 +261,22 @@ x and y are the coordinates of the top right corner.
 Remember!!!
 When you zoom into blitted image, this image will slowly lose quality.
 Zooming without quality loss work only with shapes.
+
+--------------------------
+
+# Following a point
+
+pygameZoom has a feature to follow any given point on canvas, it's useful for example when you want to zoom into
+moving object in your game.
+
+```python
+self.pygameZoom.follow_point(x,y,zoom)
+```
+ Where (x,y) are coordinates of followed point.
+
+zoom - zoom while following
+
+I recommend you to disable zooming and dragging while using this feature, because it gets buggy when user tries to zoom or drag while this feature is on 
 
 --------------------------
 

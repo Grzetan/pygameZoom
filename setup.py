@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name='pygameZoom',
-    version='0.0.3',
+    version='0.0.4',
     description='Zoom into pygame figures without quality loss',
     long_description=description,
     long_description_content_type="text/markdown",

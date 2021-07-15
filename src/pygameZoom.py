@@ -8,6 +8,8 @@ class PygameZoom(object):
     last_point = None
     position_in_window = (0, 0)
     background = 0
+    zoomingDisabled = False
+    draggingDisabled = False
 
     def __init__(self, W, H) -> None:
         self.WIDTH = W
@@ -142,6 +144,24 @@ class PygameZoom(object):
         self.position_in_window = pos
         window.blit(self.generate_surface(), pos)
 
+    def follow_point(self, x, y, zoom):
+        self.zoom = zoom
+        scale_x = self.WIDTH / zoom
+        scale_y = self.HEIGHT / zoom
+
+        self.boundaries[0] = x - scale_x / 2
+        self.boundaries[1] = x + scale_x / 2
+        self.boundaries[2] = y - scale_y / 2
+        self.boundaries[3] = y + scale_y / 2
+
+        self.correct_boundaries()
+
+    def allow_zooming(self, bool):
+        self.zoomingDisabled = not bool
+
+    def allow_dragging(self, bool):
+        self.draggingDisabled = not bool
+
     def get_mouse_pos(self):
         mouse_pos = pygame.mouse.get_pos()
         if self.position_in_window[0] <= mouse_pos[0] <= self.position_in_window[0] + self.WIDTH and \
@@ -198,7 +218,7 @@ class PygameZoom(object):
 
     def update_zoom(self):
         # If mouse is not on image, exit
-        if self.get_mouse_pos() is False:
+        if self.get_mouse_pos() is False or self.zoomingDisabled:
             self.last_point = None
             return
 
@@ -222,18 +242,19 @@ class PygameZoom(object):
                     self.last_point = mouse_pos
                     continue
 
-                offset_x = ((self.last_point[0] - mouse_pos[0]) / self.WIDTH) * (
-                            self.boundaries[1] - self.boundaries[0])
-                offset_y = ((self.last_point[1] - mouse_pos[1]) / self.HEIGHT) * (
-                            self.boundaries[3] - self.boundaries[2])
+                if not self.draggingDisabled:
+                    offset_x = ((self.last_point[0] - mouse_pos[0]) / self.WIDTH) * (
+                                self.boundaries[1] - self.boundaries[0])
+                    offset_y = ((self.last_point[1] - mouse_pos[1]) / self.HEIGHT) * (
+                                self.boundaries[3] - self.boundaries[2])
 
-                if self.boundaries[0] >= 0 and self.boundaries[1] <= self.WIDTH:
-                    self.boundaries[0] += offset_x
-                    self.boundaries[1] += offset_x
+                    if self.boundaries[0] >= 0 and self.boundaries[1] <= self.WIDTH:
+                        self.boundaries[0] += offset_x
+                        self.boundaries[1] += offset_x
 
-                if self.boundaries[2] >= 0 and self.boundaries[3] <= self.HEIGHT:
-                    self.boundaries[2] += offset_y
-                    self.boundaries[3] += offset_y
+                    if self.boundaries[2] >= 0 and self.boundaries[3] <= self.HEIGHT:
+                        self.boundaries[2] += offset_y
+                        self.boundaries[3] += offset_y
 
-                self.correct_boundaries()
-                self.last_point = mouse_pos
+                    self.correct_boundaries()
+                    self.last_point = mouse_pos
